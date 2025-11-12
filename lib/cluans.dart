@@ -98,8 +98,8 @@ class CluanModel extends ChangeNotifier {
     };
   }
 
-  Cluan getLongestAnswer() {
-    if (_cluans.isEmpty) throw StateError('No cluans available');
+  Cluan? getLongestAnswer() {
+    if (_cluans.isEmpty)return null;
     Cluan longest = _cluans.first;
     for (var c in _cluans) {
       if (c.answer!.length > longest.answer!.length) {
@@ -109,8 +109,8 @@ class CluanModel extends ChangeNotifier {
     return longest;
   }
 
-  Cluan getShortestAnswer() {
-    if (_cluans.isEmpty) throw StateError('No cluans available');
+  Cluan? getShortestAnswer() {
+    if (_cluans.isEmpty) return null;
     Cluan shortest = _cluans.first;
     for (var c in _cluans) {
       if (c.answer!.length < shortest.answer!.length) {
@@ -147,7 +147,7 @@ class Cluan {
       clue: row["clue"],
       answer: row["answer"],
       created_at: DateTime.parse(row["created_at"]),
-      user_id: row['user_id']
+      user_id: row['user_id'] ?? 'unkown'
     );
   }
 

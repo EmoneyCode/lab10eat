@@ -18,11 +18,7 @@ class LoggedInHomeScreen extends StatefulWidget {
 class _LoggedInHomeScreenState extends State<LoggedInHomeScreen> {
   int _selectedIndex = 0;
 
-  static final List<Widget> listOfWids = [
-    ListViewPlayground(),
-    AddCluans(),
-    const StatsScreen(),
-  ];
+  final List<Widget> listOfWids = [];
 
   void ontapped(int index) {
     setState(() {
@@ -32,6 +28,11 @@ class _LoggedInHomeScreenState extends State<LoggedInHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final listOfWids = [
+      ListViewPlayground(_selectedIndex),
+      ListViewPlayground(_selectedIndex),
+      const StatsScreen(),
+    ];
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -47,6 +48,12 @@ class _LoggedInHomeScreenState extends State<LoggedInHomeScreen> {
             },
             icon: const Icon(Icons.search),
           ),
+          IconButton(onPressed: (){
+            Navigator.push(context, 
+              MaterialPageRoute(builder: (context)=> AddCluans())
+            );
+          }, 
+          icon: const Icon(Icons.add))
         ],
         title: const Text("Cluans"),
       ),
@@ -55,8 +62,8 @@ class _LoggedInHomeScreenState extends State<LoggedInHomeScreen> {
         currentIndex: _selectedIndex,
         onTap: ontapped,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add Cluan'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'All Cluans'),
+          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'My Cluans'),
           BottomNavigationBarItem(icon: Icon(Icons.line_axis), label: 'Stats'),
         ],
       ),

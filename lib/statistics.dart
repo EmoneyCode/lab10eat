@@ -24,8 +24,8 @@ class StatsScreen extends StatelessWidget {
           Text("Mean: ${stats['mean']}"),
           Text("Sample Std Dev: ${stats['stdDev']}"),
           const SizedBox(height: 20),
-          Text("Longest Answer: ${longest.answer} (${longest.answer!.length} chars)"),
-          Text("Shortest Answer: ${shortest.answer} (${shortest.answer!.length} chars)"),
+          Text("Longest Answer: ${longest?.answer} (${longest?.answer?.length} chars)"),
+          Text("Shortest Answer: ${shortest?.answer} (${shortest?.answer?.length} chars)"),
         ],
       ),
     );

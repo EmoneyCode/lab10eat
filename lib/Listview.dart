@@ -3,9 +3,14 @@ import 'package:flutter_demo_29_september/cluans.dart';
 import 'package:provider/provider.dart';
 
 class ListViewPlayground extends StatelessWidget {
+  int index;
+  ListViewPlayground(this.index);
   @override
   Widget build(BuildContext context) {
-    final cluans = context.watch<CluanModel>();
+    final cluansDecider = context.watch<CluanModel>();
+    final cluans = (index == 1 ) 
+        ? cluansDecider.cluanContent.where((c)=>c.user_id == cluansDecider.supabaseClient.auth.currentUser?.id).toList()
+        : cluansDecider.cluanContent;
 
     return SafeArea(
       child: Padding(
@@ -14,20 +19,20 @@ class ListViewPlayground extends StatelessWidget {
           child: ListView.separated(
             separatorBuilder: (context, index) =>
                 Divider(color: Colors.white, thickness: 1.0),
-            itemCount: cluans.cluanContent.length,
+            itemCount: cluans.length,
             itemBuilder: (context, index) => ListTile(
               title: Text(
-                cluans.cluanContent[index].clue!,
+                cluans[index].clue!,
                 style: TextStyle(fontSize: 20),
               ),
               subtitle: Text(
-                cluans.cluanContent[index].answer!,
+                cluans[index].answer!,
                 style: TextStyle(fontSize: 16, color: Colors.grey),
               ),
               trailing: Text(
-                cluans.cluanContent[index].created_at.toString()!.split(' ')[0],
+                cluans[index].created_at.toString()!.split(' ')[0],
               ),
-              onLongPress: () => cluans.remove(cluans.cluanContent.elementAt(index)),
+              onLongPress: () => cluans.remove(cluans.elementAt(index)),
             ),
           ),
         ),
