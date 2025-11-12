@@ -62,7 +62,7 @@ class _LoggedInHomeScreenState extends State<LoggedInHomeScreen> {
         currentIndex: _selectedIndex,
         onTap: ontapped,
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'All Cluans'),
+          BottomNavigationBarItem(icon: Icon(Icons.location_city), label: 'All Cluans'),
           BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'My Cluans'),
           BottomNavigationBarItem(icon: Icon(Icons.line_axis), label: 'Stats'),
         ],

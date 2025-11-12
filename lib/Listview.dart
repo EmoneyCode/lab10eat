@@ -32,7 +32,7 @@ class ListViewPlayground extends StatelessWidget {
               trailing: Text(
                 cluans[index].created_at.toString()!.split(' ')[0],
               ),
-              onLongPress: () => cluans.remove(cluans.elementAt(index)),
+              onLongPress: () => cluansDecider.remove(cluans.elementAt(index)),
             ),
           ),
         ),
