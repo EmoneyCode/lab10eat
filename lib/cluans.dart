@@ -9,28 +9,15 @@ import 'package:intl/intl.dart';
 
 class CluanModel extends ChangeNotifier {
   SupabaseClient supabaseClient = Supabase.instance.client;
-
   List<Cluan> _cluans = [];
 
-  List<Cluan> get cluanContent => _cluans;
-
-  int get numCluans => _cluans.length;
-
-  bool _isLoggedIn = false;
-
-  bool get isLoggedIn => _isLoggedIn;
-
-  set isLoggedIn(bool val){
-    _isLoggedIn = val;
-    getAllCluans();
-  }
   // void insert() async{
   //   for(var cluan in _cluans){
   //     await supabaseClient.from('cluans').insert(cluan.toJson());
   //   }
   // }
 
-
+  
 
   void getAllCluans() async{
     List<Map<String,dynamic>> result = await supabaseClient.from('cluans').select();
@@ -46,6 +33,9 @@ class CluanModel extends ChangeNotifier {
     getAllCluans();
   }
 
+  List<Cluan> get cluanContent => _cluans;
+  int get numCluans => _cluans.length;
+
   void sortByClue() {
     _cluans.sort((a, b) => a.clue.toString().compareTo(b.clue.toString()));
     notifyListeners();
@@ -57,8 +47,7 @@ class CluanModel extends ChangeNotifier {
   }
 
   void addCluan(String clue, String answer, DateTime created_at) async{
-    String user_id = supabaseClient.auth.currentUser!.id;
-    Cluan newCluan = Cluan(clue: clue, answer: answer, created_at: created_at, user_id: user_id);
+    Cluan newCluan = Cluan(clue: clue, answer: answer, created_at: created_at);
     await supabaseClient.from("cluans").insert(newCluan.toJson());
     getAllCluans();
   }
@@ -126,12 +115,11 @@ class Cluan {
   final String clue;
   final String answer;
   final DateTime created_at;
-  final String user_id;
 
   static const int maxClueLength = 150;
   static const int maxAnswerLength = 21;
 
-  Cluan({this.id = 0, required this.clue, required this.answer, required this.created_at, required this.user_id}) {
+  Cluan({this.id = 0, required this.clue, required this.answer, required this.created_at}) {
     if (clue.length > maxClueLength) {
       throw ArgumentError("Too big of a clue");
     }
@@ -146,8 +134,7 @@ class Cluan {
       id: row["id"],
       clue: row["clue"],
       answer: row["answer"],
-      created_at: DateTime.parse(row["created_at"]),
-      user_id: row['user_id']
+      created_at: DateTime.parse(row["created_at"])
     );
   }
 
@@ -156,7 +143,6 @@ class Cluan {
       'clue' : clue,
       'answer' : answer,
       'created_at' : created_at.toIso8601String(),
-      'user_id' : user_id
     };
   }
 
